@@ -12,3 +12,30 @@
   flex-direction: row;
   margin: 10px;
 }
+
+.Search {
+  justify-items: start;
+  border-radius: 20px;
+  border-color: #3c6af6;
+}
+
+.Card {
+  width: 80%;
+  height: 100px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 8px #ccc;
+  font-weight: 600;
+}
+
+.ContentOrder {
+  display: inline;
+  width: 50%;
+  float: right;
+}
+.Order {
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+}
