@@ -1,7 +1,15 @@
 import ExpeditionPage from "./ExpeditionPage";
 import React from "react";
-import "./styles.css";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 
-export default function App() {
-  return <ExpeditionPage />;
+
+import theme from './theme';
+
+export default () => {
+  return (
+      <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <ExpeditionPage />
+      </ThemeProvider>);
 }
