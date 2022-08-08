@@ -1,8 +1,13 @@
 import { observer } from "mobx-react";
 import React from "react";
+import Search from "./components/Search";
 
 function ExpeditionsPage(props: any): any {
-  return <>Hi</>;
+  return (
+    <div className="App">
+      <Search />
+    </div>
+  );
 }
 
 export default observer(() => <ExpeditionsPage />);
