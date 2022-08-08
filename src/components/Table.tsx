@@ -3,6 +3,8 @@ import "../styles.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
   Typography,
+  Card,
+  CardContent,
   FormControl,
   Box,
   Checkbox,
@@ -16,75 +18,74 @@ import {
   InputLabel
 } from "@mui/material";
 
-
 const rows = [
-    {
-      id: 101885,
-      reference: "7987UDHPAPWKS",
-      type: "pickup",
-      date: 1659398400000,
-      statusCode: "created",
-      street: "Carrer de Pau Claris 112",
-      postalCode: "08009",
-      city: "Barcelona",
-      country: "españa",
-      createdAt: "2022-07-27T14:52:14Z",
-      updatedAt: "2022-08-02T12:33:47Z",
-      client: {
-        username: "martipol",
-        profile: {
-          emails: ["testemail@gmail.com", "clienttest@vonzu.es"],
-          phones: [],
-          name: "Marti pol"
-        }
-      }
-    },
-    {
-      id: 101881,
-      reference: "753152OMEF0PS",
-      type: "pickup",
-      date: 1659398400000,
-      statusCode: "created",
-      street: "Carrer de Pau Claris 112",
-      postalCode: "08009",
-      city: "Barcelona",
-      country: "españa",
-      createdAt: "2022-07-27T14:52:14Z",
-      updatedAt: "2022-07-27T14:52:22Z",
-      description: "",
-      client: {
-        username: "martipol",
-        profile: {
-          emails: ["testemail@gmail.com"],
-          phones: [],
-          name: "marti pol"
-        }
-      }
-    },
-    {
-      id: 101878,
-      reference: "0675IVKYM8HNS",
-      type: "delivery",
-      date: 1659398400000,
-      statusCode: "incidence",
-      street: "Gran Via de les Corts Catalanes 645",
-      postalCode: "Spain",
-      city: "08010",
-      country: "españa",
-      createdAt: "2022-07-27T14:52:14Z",
-      updatedAt: "2022-07-27T14:52:22Z",
-      description: "Veg It",
-      barcodes: ["1018831029UHVH3GWAS001"],
-      client: {
-        username: "clienttest",
-        profile: {
-          emails: ["clienttest@vonzu.es"],
-          phones: ["637492532"],
-          name: "client test"
-        }
+  {
+    id: 101885,
+    reference: "7987UDHPAPWKS",
+    type: "pickup",
+    date: 1659398400000,
+    statusCode: "created",
+    street: "Carrer de Pau Claris 112",
+    postalCode: "08009",
+    city: "Barcelona",
+    country: "españa",
+    createdAt: "2022-07-27T14:52:14Z",
+    updatedAt: "2022-08-02T12:33:47Z",
+    client: {
+      username: "martipol",
+      profile: {
+        emails: ["testemail@gmail.com", "clienttest@vonzu.es"],
+        phones: [],
+        name: "Marti pol"
       }
     }
-  ];
+  },
+  {
+    id: 101881,
+    reference: "753152OMEF0PS",
+    type: "pickup",
+    date: 1659398400000,
+    statusCode: "created",
+    street: "Carrer de Pau Claris 112",
+    postalCode: "08009",
+    city: "Barcelona",
+    country: "españa",
+    createdAt: "2022-07-27T14:52:14Z",
+    updatedAt: "2022-07-27T14:52:22Z",
+    description: "",
+    client: {
+      username: "martipol",
+      profile: {
+        emails: ["testemail@gmail.com"],
+        phones: [],
+        name: "marti pol"
+      }
+    }
+  },
+  {
+    id: 101878,
+    reference: "0675IVKYM8HNS",
+    type: "delivery",
+    date: 1659398400000,
+    statusCode: "incidence",
+    street: "Gran Via de les Corts Catalanes 645",
+    postalCode: "Spain",
+    city: "08010",
+    country: "españa",
+    createdAt: "2022-07-27T14:52:14Z",
+    updatedAt: "2022-07-27T14:52:22Z",
+    description: "Veg It",
+    barcodes: ["1018831029UHVH3GWAS001"],
+    client: {
+      username: "clienttest",
+      profile: {
+        emails: ["clienttest@vonzu.es"],
+        phones: ["637492532"],
+        name: "client test"
+      }
+    }
+  }
+];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -163,7 +164,35 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
   return (
     <Grid container spacing={2}>
-      
+      <Grid item xs={6} md={8}>
+        <Checkbox
+          color="primary"
+          indeterminate={numSelected > 0 && numSelected < rowCount}
+          checked={rowCount > 0 && numSelected === rowCount}
+          onChange={onSelectAllClick}
+          inputProps={{
+            "aria-label": "select all desserts"
+          }}
+        />
+        Seleccionar todo
+      </Grid>
+      <Grid item xs={6} md={4} className="ContentOrder">
+        <FormControl fullWidth>
+          <InputLabel htmlFor="grouped-select">Seleccionar</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            label="order"
+            className="Order"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {rows.map((row) => (
+              <MenuItem value={1}>{row.id}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Grid>
     </Grid>
   );
 }
@@ -286,7 +315,28 @@ export default function EnhancedTable() {
         rowCount={rows.length}
       />
       <TableBody>
-        
+        {rows.map((row) => (
+          <Card className="Card">
+            <CardContent>
+              <Box display="grid" gridTemplateColumns="repeat(12, 1fr)">
+                <Box gridColumn="span 1">
+                  <Checkbox />
+                </Box>
+                <Box gridColumn="span 1">{row.id}</Box>
+                <Box gridColumn="span 3">| {row.reference}</Box>
+                <Box gridColumn="span 4">{row.client.username}</Box>
+                <Box gridColumn="span 3">{row.statusCode}</Box>
+
+                <Box gridColumn="span 3">{row.updatedAt}</Box>
+                <Box gridColumn="span 2">{row.description}</Box>
+                <Box gridColumn="span 4">{row.client.profile.emails}</Box>
+                <Box gridColumn="span 3">
+                  {row.street + row.postalCode + row.city + row.country}
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        ))}
       </TableBody>
     </Box>
   );
